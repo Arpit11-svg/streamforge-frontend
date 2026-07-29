@@ -1,5 +1,5 @@
 import React from "react";
-import logoImage from "../assets/streamforge_logo.png";
+import logoImage from "../../assets/streamforge_logo.png";
 
 function Logo({ width = "100px" }) {
   return (
