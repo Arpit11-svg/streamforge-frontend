@@ -18,9 +18,15 @@ function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 md:h-20 md:gap-6 md:px-6">
         {/* Logo - left */}
         <Link to="/" className="flex shrink-0 items-center gap-2">
-          <div className="rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 p-1 shadow-md shadow-blue-600/30 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/40">
-            <Logo width="36px" />
+          <div className="transition-all duration-300 hover:scale-105 hover:shadow-lg">
+            <Logo width="50px" />
           </div>
+
+          <div className="hidden md:block">
+              <h1 className="text-xl font-bold text-cyan-300">StreamForge</h1>
+              <p className="text-xs text-gray-500">Create • Share • Inspire</p>
+            </div>
+
         </Link>
 
         {/* Search - middle */}

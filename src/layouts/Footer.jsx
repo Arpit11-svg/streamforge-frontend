@@ -56,7 +56,7 @@ function Footer() {
             </div>
 
             <p className="text-gray-400 leading-7 mb-6">
-              StreamForge is a platform for creators to share their content and
+              <span className="text-cyan-300">StreamForge</span> is a platform for creators to share their content and
               connect with their audience. Join us and start your journey today!
             </p>
 
