@@ -18,6 +18,13 @@ class VideoService {
         return response.data;
     }
 
+    async getVideoById(videoId) {
+        const response = await api.get(
+            `/videos/${videoId}`
+        );
+
+        return response.data;
+    }
 }
 
 const videoService = new VideoService();

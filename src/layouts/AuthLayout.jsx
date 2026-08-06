@@ -3,7 +3,7 @@ import BackgroundGlow from "../components/common/BackgroundGlow";
 function AuthLayout({ children }) {
   return (
     <div
-      className="relative min-h-screen overflow-hidden bg-slate-950"
+      className="relative min-h-screen overflow-hidden bg-slate-800"
     >
       <BackgroundGlow />
 

@@ -1,14 +1,15 @@
 import { formatDuration, formatViews, formatTimeAgo } from "../../utils/formatUtils.js";
+import { useNavigate } from "react-router-dom";
 
 function VideoCard({ video }) {
   const thumbnailUrl = video?.thumbnail?.url;
   const ownerName = video?.owner?.fullName || video?.owner?.username || "Unknown creator";
   const ownerAvatar = video?.owner?.avatar;
 
+  const navigate = useNavigate();
+
   const handleClick = () => {
-    // TODO: navigate to a watch page
-    alert(`Open video: ${video._id}`);
-    console.log("Open video:", video._id);
+    navigate(`/video/${video._id}`, { state: { video } });
   };
 
   return (
@@ -16,7 +17,7 @@ function VideoCard({ video }) {
       onClick={handleClick}
       className="group cursor-pointer"
     >
-      <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-slate-800">
+      <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-slate-700">
         <img
           src={thumbnailUrl}
           alt={video.title}
@@ -30,11 +31,11 @@ function VideoCard({ video }) {
           </span>
         )}
 
-        <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-white/0 transition-all duration-300 group-hover:ring-white/10 group-hover:shadow-lg group-hover:shadow-blue-900/30" />
+        <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-white/0 transition-all duration-300 group-hover:ring-cyan-400/20 group-hover:shadow-lg group-hover:shadow-cyan-500/20" />
       </div>
 
       <div className="mt-3 flex gap-3">
-        <div className="h-9 w-9 shrink-0 overflow-hidden rounded-full bg-slate-700">
+        <div className="h-9 w-9 shrink-0 overflow-hidden rounded-full bg-slate-600">
           {ownerAvatar ? (
             <img src={ownerAvatar} alt={ownerName} className="h-full w-full object-cover" />
           ) : (
@@ -48,8 +49,8 @@ function VideoCard({ video }) {
           <h3 className="line-clamp-2 text-sm font-semibold text-white transition-colors group-hover:text-cyan-300">
             {video.title}
           </h3>
-          <p className="mt-1 truncate text-xs text-slate-400">{ownerName}</p>
-          <p className="truncate text-xs text-slate-500">
+          <p className="mt-1 truncate text-xs text-slate-300">{ownerName}</p>
+          <p className="truncate text-xs text-slate-400">
             {formatViews(video?.views)} • {formatTimeAgo(video?.createdAt)}
           </p>
         </div>

@@ -14,20 +14,20 @@ import { SiTailwindcss, SiMongodb } from "react-icons/si";
 
 function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-slate-950 text-gray-300">
-      <div className="h-1 bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500"></div>
+    <footer className="relative overflow-hidden bg-slate-800 text-slate-300">
+      <div className="h-1 bg-linear-to-r from-blue-500 via-purple-400 to-pink-400"></div>
 
-      <div className="pointer-events-none absolute -top-32 -left-32 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
-      <div className="pointer-events-none absolute -bottom-32 -right-32 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl"></div>
+      <div className="pointer-events-none absolute -top-32 -left-32 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"></div>
+      <div className="pointer-events-none absolute -bottom-32 -right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
 
       <div className="relative max-w-7xl mx-auto px-6 py-16">
         {/* Newsletter */}
-        <div className="mb-14 flex flex-col lg:flex-row items-center justify-between gap-6 rounded-2xl border border-slate-800 bg-slate-900/50 px-8 py-8 backdrop-blur-sm">
+        <div className="mb-14 flex flex-col lg:flex-row items-center justify-between gap-6 rounded-2xl border border-slate-700 bg-slate-700/50 px-8 py-8 backdrop-blur-sm">
           <div className="text-center lg:text-left">
             <h3 className="text-white text-xl font-semibold mb-2">
               Stay in the loop
             </h3>
-            <p className="text-gray-400">
+            <p className="text-slate-300">
               Get updates on new features, creators, and platform news.
             </p>
           </div>
@@ -36,11 +36,11 @@ function Footer() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition focus:border-blue-500"
+              className="w-full rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-sm text-white placeholder-slate-400 outline-none transition focus:border-blue-400"
             />
             <button
               type="submit"
-              className="flex shrink-0 items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:from-blue-500 hover:to-purple-500"
+              className="flex shrink-0 items-center gap-2 rounded-xl bg-linear-to-r from-blue-500 to-purple-500 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:from-blue-400 hover:to-purple-400"
             >
               <FaPaperPlane size={14} />
               Subscribe
@@ -55,7 +55,7 @@ function Footer() {
               <Logo width="120px" />
             </div>
 
-            <p className="text-gray-400 leading-7 mb-6">
+            <p className="text-slate-300 leading-7 mb-6">
               <span className="text-cyan-300">StreamForge</span> is a platform for creators to share their content and
               connect with their audience. Join us and start your journey today!
             </p>
@@ -65,7 +65,7 @@ function Footer() {
                 href="https://github.com/Arpit11-svg"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-xl bg-slate-900 hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center shadow-lg"
+                className="w-11 h-11 rounded-xl bg-slate-700 hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center shadow-lg"
               >
                 <FaGithub size={20} />
               </a>
@@ -74,7 +74,7 @@ function Footer() {
                 href="https://www.linkedin.com/in/arpit-choudhary-092706328/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-xl bg-slate-900 hover:bg-blue-600 hover:text-white transition-all duration-300 flex items-center justify-center shadow-lg"
+                className="w-11 h-11 rounded-xl bg-slate-700 hover:bg-blue-500 hover:text-white transition-all duration-300 flex items-center justify-center shadow-lg"
               >
                 <FaLinkedin size={20} />
               </a>
@@ -83,7 +83,7 @@ function Footer() {
                 href="https://x.com/ChoudharyArpit_"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-xl bg-slate-900 hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center shadow-lg"
+                className="w-11 h-11 rounded-xl bg-slate-700 hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center shadow-lg"
               >
                 <FaXTwitter size={18} />
               </a>
@@ -189,25 +189,25 @@ function Footer() {
 
         {/* Bottom */}
 
-        <div className="border-t border-slate-800 mt-14 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-gray-500">
+        <div className="border-t border-slate-700 mt-14 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-slate-400">
             © {new Date().getFullYear()} StreamForge. All rights reserved.
           </p>
 
-          <div className="flex gap-4 text-xs text-gray-500">
-            <span className="flex items-center gap-1.5 rounded-full border border-slate-800 px-3 py-1.5 hover:text-white hover:border-slate-600 transition">
+          <div className="flex gap-4 text-xs text-slate-400">
+            <span className="flex items-center gap-1.5 rounded-full border border-slate-700 px-3 py-1.5 hover:text-white hover:border-slate-500 transition">
               <FaReact className="text-sky-400" /> React
             </span>
 
-            <span className="flex items-center gap-1.5 rounded-full border border-slate-800 px-3 py-1.5 hover:text-white hover:border-slate-600 transition">
+            <span className="flex items-center gap-1.5 rounded-full border border-slate-700 px-3 py-1.5 hover:text-white hover:border-slate-500 transition">
               <FaNodeJs className="text-green-500" /> Node.js
             </span>
 
-            <span className="flex items-center gap-1.5 rounded-full border border-slate-800 px-3 py-1.5 hover:text-white hover:border-slate-600 transition">
+            <span className="flex items-center gap-1.5 rounded-full border border-slate-700 px-3 py-1.5 hover:text-white hover:border-slate-500 transition">
               <SiMongodb className="text-green-400" /> MongoDB
             </span>
 
-            <span className="flex items-center gap-1.5 rounded-full border border-slate-800 px-3 py-1.5 hover:text-white hover:border-slate-600 transition">
+            <span className="flex items-center gap-1.5 rounded-full border border-slate-700 px-3 py-1.5 hover:text-white hover:border-slate-500 transition">
               <SiTailwindcss className="text-cyan-400" /> Tailwind
             </span>
           </div>

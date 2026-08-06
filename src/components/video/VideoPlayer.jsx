@@ -1,5 +1,3 @@
-
-
 const VideoPlayer = ({ videoUrl, thumbnailUrl }) => {
   return (
     <video
