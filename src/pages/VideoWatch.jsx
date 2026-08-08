@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import videoService from "../services/videoService.js";
+import { FaThumbsUp, FaRegThumbsUp } from "react-icons/fa";
+import videoService from "../services/video.service.js";
 import VideoPlayer from "../components/video/VideoPlayer.jsx";
 import { formatViews, formatTimeAgo } from "../utils/formatUtils.js";
+import likeService from "../services/like.service.js";
 
 function VideoWatch() {
   const { id: videoId } = useParams();
@@ -10,6 +12,42 @@ function VideoWatch() {
   const [video, setVideo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [likesCount, setLikesCount] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isLikeSubmitting, setIsLikeSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!videoId) return;
+
+    likeService
+      .getVideoLikes(videoId)
+      .then((response) => {
+        setLikesCount(response.data.likes);
+      })
+      .catch((err) => {
+        console.error("Error fetching likes count:", err);
+      });
+  }, [videoId]);
+
+  const handleLikeToggle = () => {
+    if (!videoId || isLikeSubmitting) return;
+
+    const wasLiked = isLiked;
+    setIsLikeSubmitting(true);
+    setIsLiked(!wasLiked);
+    setLikesCount((count) => (wasLiked ? count - 1 : count + 1));
+
+    likeService
+      .likePost(videoId)
+      .catch((err) => {
+        console.error("Error toggling like:", err);
+        setIsLiked(wasLiked);
+        setLikesCount((count) => (wasLiked ? count + 1 : count - 1));
+      })
+      .finally(() => {
+        setIsLikeSubmitting(false);
+      });
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -60,9 +98,30 @@ function VideoWatch() {
             </div>
             <div className="h-0.5 w-full bg-linear-to-r from-blue-500 via-cyan-300 to-blue-500" />
 
-            <h1 className="mt-4 text-lg font-semibold text-white">
-              {video.title}
-            </h1>
+            <div className="mt-4 flex items-center justify-between gap-3">
+              <h1 className="text-lg font-semibold text-white">
+                {video.title}
+              </h1>
+
+              <button
+                type="button"
+                onClick={handleLikeToggle}
+                disabled={isLikeSubmitting}
+                aria-pressed={isLiked}
+                className={`flex shrink-0 items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
+                  isLiked
+                    ? "border-cyan-400 bg-cyan-400/10 text-cyan-300"
+                    : "border-slate-600 text-slate-300 hover:border-slate-500 hover:text-white"
+                }`}
+              >
+                {isLiked ? (
+                  <FaThumbsUp className="h-4 w-4" />
+                ) : (
+                  <FaRegThumbsUp className="h-4 w-4" />
+                )}
+                {likesCount || 0}
+              </button>
+            </div>
 
             <p className="mt-1 text-sm text-slate-400">
               {formatViews(video.views)} • {formatTimeAgo(video.createdAt)}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import videoService from "../services/videoService.js";
+import videoService from "../services/video.service.js";
 import VideoCard from "../components/video/VideoCard.jsx";
 
 function Home() {

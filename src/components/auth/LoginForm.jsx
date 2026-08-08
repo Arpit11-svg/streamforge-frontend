@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { Button, Input } from "../ui";
-
 import authService from "../../services/auth.service";
 
 function LoginForm() {
@@ -13,8 +11,10 @@ function LoginForm() {
     formState: { errors },
   } = useForm();
 
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const submit = async (data) => {
     setError("");
@@ -25,6 +25,10 @@ function LoginForm() {
         identifier: data.identifier,
         password: data.password,
       });
+      setSuccess("LoggedIn successfully!");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
       console.log("Login successful");
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong.");
@@ -50,6 +54,24 @@ function LoginForm() {
                     "
         >
           {error}
+        </div>
+      )}
+
+      {success && (
+        <div
+          className="
+                    mb-6
+                    rounded-xl
+                    border
+                    border-green-500/30
+                    bg-green-500/10
+                    px-4
+                    py-3
+                    text
+                    text-green-300
+                    "
+        >
+          {success}
         </div>
       )}
 
