@@ -54,6 +54,31 @@ function SignupForm() {
 
   return (
     <>
+
+    
+      <div
+        className="
+                mt-4
+                mb-6
+                text-center
+                text-2xl
+                text-slate-400
+                "
+      >
+        Already have an account?
+        <Link
+          to="/login"
+          className="
+                    ml-2
+                    font-semibold
+                    text-blue-400
+                    transition
+                    hover:text-cyan-300
+                    "
+        >
+          Sign In
+        </Link>
+      </div>
       {error && (
         <div
           className="
@@ -176,29 +201,6 @@ function SignupForm() {
           {loading ? "Creating Account..." : "Create Account"}
         </Button>
       </form>
-
-      <div
-        className="
-                mt-8
-                text-center
-                text-sm
-                text-slate-400
-                "
-      >
-        Already have an account?
-        <Link
-          to="/login"
-          className="
-                    ml-2
-                    font-semibold
-                    text-blue-400
-                    transition
-                    hover:text-cyan-300
-                    "
-        >
-          Sign In
-        </Link>
-      </div>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { FaThumbsUp, FaRegThumbsUp } from "react-icons/fa";
@@ -5,6 +6,7 @@ import videoService from "../services/video.service.js";
 import VideoPlayer from "../components/video/VideoPlayer.jsx";
 import { formatViews, formatTimeAgo } from "../utils/formatUtils.js";
 import likeService from "../services/like.service.js";
+import Comment from "./Comment.jsx";
 
 function VideoWatch() {
   const { id: videoId } = useParams();
@@ -148,6 +150,10 @@ function VideoWatch() {
                   {video.description}
                 </p>
               </div>
+            </div>
+
+            <div className="mt-6 rounded-2xl border border-slate-700 bg-slate-700/50 p-4 backdrop-blur-sm">
+            <Comment videoId={videoId} />
             </div>
           </div>
         ) : (
