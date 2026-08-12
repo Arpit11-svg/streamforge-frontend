@@ -48,6 +48,15 @@ function Header() {
             />
           </div>
         </form>
+        {/* publish video */}
+        <div className="flex-shrink-0">
+          <button
+            onClick={() => navigate("/publish-video")}
+            className="rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-blue-500/30 transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-blue-500/50 active:scale-95"
+          >
+            <span className="text-2xl font-bold">+</span>Publish Video
+          </button>
+        </div>
 
         {/* Signup - right */}
         <button

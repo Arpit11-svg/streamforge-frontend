@@ -5,6 +5,7 @@ import Header from "./layouts/Header.jsx";
 import Footer from "./layouts/Footer.jsx";
 import Home from "./pages/Home.jsx";
 import VideoWatch from "./pages/VideoWatch.jsx";
+import PublishVideo from "./pages/PublishVideo.jsx";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/video/:id" element={<VideoWatch />} />
+          <Route path="/publish-video" element={<PublishVideo />} />
         </Routes>
       </main>
       <Footer />
