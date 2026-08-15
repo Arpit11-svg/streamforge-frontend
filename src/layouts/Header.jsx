@@ -3,7 +3,8 @@ import { Logo } from "../components/ui";
 import { useNavigate, Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import Logout from "../components/auth/Logout.jsx";
+import { FaPlus } from "react-icons/fa";
+import ProfileDropdown from "../components/auth/ProfileDropdown.jsx";
 
 function Header() {
   const navigate = useNavigate();
@@ -51,21 +52,52 @@ function Header() {
             />
           </div>
         </form>
+
         {/* publish video */}
         <div className="flex-shrink-0">
           <button
-            onClick={() => navigate("/publish-video")}
-            className="rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-blue-500/30 transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-blue-500/50 active:scale-95"
+            type="button"
+            onClick={() => navigate("/publish")}
+            aria-label="Create new video"
+            title="Create new video"
+            className="
+            group
+            flex
+            h-10
+            w-10
+            items-center
+            justify-center
+            rounded-full
+            border
+            border-slate-600
+            bg-slate-700
+            text-slate-200
+            shadow-md
+            shadow-black/20
+            transition-all
+            duration-300
+            hover:border-cyan-400/50
+            hover:bg-slate-600
+            hover:text-cyan-300
+            hover:shadow-lg
+            hover:shadow-cyan-500/20
+            active:scale-95
+          "
           >
-            <span className="text-2xl font-bold">+</span>Publish Video
+            <FaPlus
+              className="
+            text-xl
+            transition-transform
+            duration-300
+            group-hover:rotate-90
+          "
+            />
           </button>
         </div>
 
         {/* Signup or Logout - right */}
         {authStatus ? (
-          <div className="flex-shrink-0">
-            <Logout />
-          </div>
+          <ProfileDropdown />
         ) : (
           <div className="flex-shrink-0">
             <button
