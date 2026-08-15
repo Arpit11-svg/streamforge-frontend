@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Input } from "../ui";
@@ -11,11 +11,18 @@ function SignupForm() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm({ shouldFocusError: true });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+
+  useEffect(() => {
+    if (error || success) {
+      window.scrollTo(0, 0);
+    }
+  }, [error, success]);
 
   const navigate = useNavigate();
 

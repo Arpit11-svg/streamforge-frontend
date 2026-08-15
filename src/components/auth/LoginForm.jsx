@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Input } from "../ui";
@@ -11,12 +11,18 @@ function LoginForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ shouldFocusError: true });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (error) {
+      window.scrollTo(0, 0);
+    }
+  }, [error]);
 
   const submit = async (data) => {
     setError("");
@@ -28,16 +34,14 @@ function LoginForm() {
         password: data.password,
       });
 
-      if(response.statusCode===200) {
+      if (response.statusCode === 200) {
         const userData = await authService.getCurrentUser();
-        
-        if(userData) {
 
+        if (userData) {
           dispatch(login(userData));
           navigate("/");
         }
       }
-          
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong.");
     } finally {
@@ -64,7 +68,6 @@ function LoginForm() {
           {error}
         </div>
       )}
-
 
       <form onSubmit={handleSubmit(submit)} className="space-y-5">
         <Input

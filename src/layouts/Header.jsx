@@ -57,7 +57,7 @@ function Header() {
         <div className="flex-shrink-0">
           <button
             type="button"
-            onClick={() => navigate("/publish")}
+            onClick={() => navigate("/publish-video")}
             aria-label="Create new video"
             title="Create new video"
             className="
