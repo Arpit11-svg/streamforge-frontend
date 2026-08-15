@@ -22,7 +22,6 @@ class VideoService {
         const response = await api.get(
             `/videos/${videoId}`
         );
-
         return response.data;
     }
 }

@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { Button, Input } from "../ui";
-
 import authService from "../../services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 function SignupForm() {
   const {
@@ -15,9 +14,10 @@ function SignupForm() {
   } = useForm();
 
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const navigate = useNavigate();
 
   const create = async (data) => {
     setError("");
@@ -43,7 +43,8 @@ function SignupForm() {
 
       await authService.register(formData);
 
-      setSuccess("🎉 Account created successfully!");
+      setSuccess("Account created successfully!");
+      navigate("/login");
       reset();
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong.");
@@ -54,8 +55,6 @@ function SignupForm() {
 
   return (
     <>
-
-    
       <div
         className="
                 mt-4

@@ -25,7 +25,7 @@ class AuthService {
     async logout() {
 
         const response = await api.post(
-            "/users/logout"
+            "/users/logout",
         );
 
         return response.data;
@@ -36,6 +36,8 @@ class AuthService {
         const response = await api.get(
             "/users/current-user"
         );
+
+        console.log("getCurrentUser response: ", response.data);
 
         return response.data;
     }

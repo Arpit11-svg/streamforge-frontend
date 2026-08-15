@@ -9,7 +9,7 @@ import likeService from "../services/like.service.js";
 import Comment from "./Comment.jsx";
 
 function VideoWatch() {
-  const { id: videoId } = useParams();
+  const { videoId } = useParams();
 
   const [video, setVideo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -52,6 +52,7 @@ function VideoWatch() {
   };
 
   useEffect(() => {
+    if (!videoId) return;
     setIsLoading(true);
     setError(null);
 
@@ -68,6 +69,7 @@ function VideoWatch() {
         setIsLoading(false);
       });
   }, [videoId]);
+
 
   const ownerName =
     video?.owner?.fullName || video?.owner?.username || "Unknown creator";
@@ -153,7 +155,7 @@ function VideoWatch() {
             </div>
 
             <div className="mt-6 rounded-2xl border border-slate-700 bg-slate-700/50 p-4 backdrop-blur-sm">
-            <Comment videoId={videoId} />
+              <Comment videoId={videoId} />
             </div>
           </div>
         ) : (

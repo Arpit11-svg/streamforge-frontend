@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Input } from "../ui";
 import authService from "../../services/auth.service";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/authSlice.js";
 
 function LoginForm() {
   const {
@@ -12,24 +14,30 @@ function LoginForm() {
   } = useForm();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const submit = async (data) => {
     setError("");
     setLoading(true);
 
     try {
-      await authService.login({
+      const response = await authService.login({
         identifier: data.identifier,
         password: data.password,
       });
-      setSuccess("LoggedIn successfully!");
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
-      console.log("Login successful");
+
+      if(response.statusCode===200) {
+        const userData = await authService.getCurrentUser();
+        
+        if(userData) {
+
+          dispatch(login(userData));
+          navigate("/");
+        }
+      }
+          
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong.");
     } finally {
@@ -57,23 +65,6 @@ function LoginForm() {
         </div>
       )}
 
-      {success && (
-        <div
-          className="
-                    mb-6
-                    rounded-xl
-                    border
-                    border-green-500/30
-                    bg-green-500/10
-                    px-4
-                    py-3
-                    text
-                    text-green-300
-                    "
-        >
-          {success}
-        </div>
-      )}
 
       <form onSubmit={handleSubmit(submit)} className="space-y-5">
         <Input

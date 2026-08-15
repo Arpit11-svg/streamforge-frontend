@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import { Logo } from "../components/ui";
 import { useNavigate, Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import Logout from "../components/auth/Logout.jsx";
 
 function Header() {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
 
+  const authStatus = useSelector((state) => state.auth.isAuthenticated);
+
   const handleSearch = (e) => {
     // TODO: Implement search functionality
     e.preventDefault();
-    alert("Search functionality will be implemented soon!"); 
+    alert("Search functionality will be implemented soon!");
   };
 
   return (
@@ -23,10 +27,9 @@ function Header() {
           </div>
 
           <div className="hidden md:block">
-              <h1 className="text-xl font-bold text-cyan-300">StreamForge</h1>
-              <p className="text-xs text-slate-400">Create • Share • Inspire</p>
-            </div>
-
+            <h1 className="text-xl font-bold text-cyan-300">StreamForge</h1>
+            <p className="text-xs text-slate-400">Create • Share • Inspire</p>
+          </div>
         </Link>
 
         {/* Search - middle */}
@@ -58,18 +61,25 @@ function Header() {
           </button>
         </div>
 
-        {/* Signup - right */}
-        <button
-          onClick={() => navigate("/signup")}
-          className="shrink-0 rounded-full bg-linear-to-r from-blue-500 via-blue-400 to-cyan-400 px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-blue-500/30 transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-blue-500/50 active:scale-95"
-        >
-          Sign Up
-        </button>
+        {/* Signup or Logout - right */}
+        {authStatus ? (
+          <div className="flex-shrink-0">
+            <Logout />
+          </div>
+        ) : (
+          <div className="flex-shrink-0">
+            <button
+              onClick={() => navigate("/signup")}
+              className="shrink-0 rounded-full bg-linear-to-r from-blue-500 via-blue-400 to-cyan-400 px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-blue-500/30 transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-blue-500/50 active:scale-95"
+            >
+              Sign Up
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="absolute bottom-0 left-0 h-0.5 w-full bg-linear-to-r from-blue-500 via-cyan-300 to-blue-500" />
     </header>
   );
 }
-
 export default Header;

@@ -12,6 +12,7 @@ function VideoCard({ video }) {
     navigate(`/video/${video._id}`, { state: { video } });
   };
 
+
   return (
     <div
       onClick={handleClick}
