@@ -16,10 +16,10 @@ function Comment({ videoId }) {
     CommentService.getVideoComments(videoId)
       .then((response) => {
         setComments(response.data);
-        console.log(
-          "=======Comments fetched successfully=========",
-          response.data,
-        );
+        // console.log(
+        //   "=======Comments fetched successfully=========",
+        //   response.data,
+        // );
       })
       .catch((error) => {
         console.error("====Error fetching comments:", error);

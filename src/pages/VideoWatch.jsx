@@ -6,7 +6,9 @@ import videoService from "../services/video.service.js";
 import VideoPlayer from "../components/video/VideoPlayer.jsx";
 import { formatViews, formatTimeAgo } from "../utils/formatUtils.js";
 import likeService from "../services/like.service.js";
+import subscriptionService from "../services/subscription.service.js";
 import Comment from "./Comment.jsx";
+import authService from "../services/auth.service.js";
 
 function VideoWatch() {
   const { videoId } = useParams();
@@ -17,7 +19,31 @@ function VideoWatch() {
   const [likesCount, setLikesCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isLikeSubmitting, setIsLikeSubmitting] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [subscriberCount, setSubscriberCount] = useState(0);
+  const [isSubscribeSubmitting, setIsSubscribeSubmitting] = useState(false);
 
+  // fetch-video from ID
+  useEffect(() => {
+    if (!videoId) return;
+    setIsLoading(true);
+    setError(null);
+
+    videoService
+      .getVideoById(videoId)
+      .then((response) => {
+        setVideo(response.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching video:", err);
+        setError("Something went wrong while loading this video.");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [videoId]);
+
+  // fetch like from videoId
   useEffect(() => {
     if (!videoId) return;
 
@@ -51,25 +77,40 @@ function VideoWatch() {
       });
   };
 
+  //fetch subscriber of channel by username
   useEffect(() => {
-    if (!videoId) return;
-    setIsLoading(true);
-    setError(null);
+    if (!video?.owner?.username) return;
 
-    videoService
-      .getVideoById(videoId)
+    authService
+      .getUserChannelProfile(video.owner.username)
       .then((response) => {
-        setVideo(response.data);
+        setIsSubscribed(response.isSubscribed);
+        setSubscriberCount(response.subscribersCount);
       })
       .catch((err) => {
-        console.error("Error fetching video:", err);
-        setError("Something went wrong while loading this video.");
+        console.error("Error fetching channel profile:", err);
+      });
+  }, [video?.owner?.username]);
+
+  const toggleSubscribe = () => {
+    if (!video || isSubscribeSubmitting) return;
+
+    const wasSubscribed = isSubscribed;
+    setIsSubscribeSubmitting(true);
+    setIsSubscribed(!wasSubscribed);
+    setSubscriberCount((count) => (wasSubscribed ? count - 1 : count + 1));
+
+    subscriptionService
+      .toggleSubscription(video.owner?._id)
+      .catch((err) => {
+        console.error("Error toggling subscription:", err);
+        setIsSubscribed(wasSubscribed);
+        setSubscriberCount((count) => (wasSubscribed ? count + 1 : count - 1));
       })
       .finally(() => {
-        setIsLoading(false);
+        setIsSubscribeSubmitting(false);
       });
-  }, [videoId]);
-
+  };
 
   const ownerName =
     video?.owner?.fullName || video?.owner?.username || "Unknown creator";
@@ -101,7 +142,7 @@ function VideoWatch() {
               />
             </div>
             <div className="h-0.5 w-full bg-linear-to-r from-blue-500 via-cyan-300 to-blue-500" />
-
+            {/* video related */}
             <div className="mt-4 flex items-center justify-between gap-3">
               <h1 className="text-lg font-semibold text-white">
                 {video.title}
@@ -130,6 +171,7 @@ function VideoWatch() {
             <p className="mt-1 text-sm text-slate-400">
               {formatViews(video.views)} • {formatTimeAgo(video.createdAt)}
             </p>
+            {/* owner channel related */}
 
             <div className="mt-4 flex gap-3 rounded-2xl border border-slate-700 bg-slate-700/50 p-4 backdrop-blur-sm">
               <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-slate-600 ring-1 ring-slate-600">
@@ -146,12 +188,34 @@ function VideoWatch() {
                 )}
               </div>
 
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium text-cyan-300">{ownerName}</p>
-                <p className="mt-2 whitespace-pre-line text-sm text-slate-300">
-                  {video.description}
+                <p className="text-xs text-slate-400">
+                  {subscriberCount} {subscriberCount === 1 ? "Subscriber" : "Subscribers"}
                 </p>
               </div>
+
+              {/* subscribe button */}
+              <button
+                type="button"
+                onClick={toggleSubscribe}
+                disabled={isSubscribeSubmitting}
+                aria-pressed={isSubscribed}
+                className={`h-fit shrink-0 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
+                  isSubscribed
+                    ? "border-slate-600 text-slate-300 hover:border-slate-500 hover:text-white"
+                    : "border-cyan-400 bg-cyan-400/10 text-cyan-300 hover:bg-cyan-400/20"
+                }`}
+              >
+                {isSubscribed ? "Unsubscribe" : "Subscribe"}
+              </button>
+            </div>
+
+            {/* video description */}
+            <div>
+              <p className="mt-2 whitespace-pre-line text-sm text-slate-300">
+                {video.description}
+              </p>
             </div>
 
             <div className="mt-6 rounded-2xl border border-slate-700 bg-slate-700/50 p-4 backdrop-blur-sm">

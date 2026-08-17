@@ -37,9 +37,16 @@ class AuthService {
             "/users/current-user"
         );
 
-        console.log("getCurrentUser response: ", response.data);
+        // console.log("getCurrentUser response: ", response.data);
 
         return response.data;
+    }
+
+    async getUserChannelProfile(username){
+        const response = await api.get(`/users/c/${username}`);
+        // console.log("=============UserProfile from auth.service.js is: ", response.data.data);
+        return response.data.data;
+        
     }
 }
 
