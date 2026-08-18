@@ -1,23 +1,35 @@
 import { useState, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { FaRegComment, FaPaperPlane } from "react-icons/fa";
 import CommentService from "../services/comment.service.js";
 import { formatTimeAgo } from "../utils/formatUtils.js";
 
-function CommentAvatar({ name, avatarUrl, size = "h-10 w-10" }) {
+function CommentAvatar({ name, avatarUrl, username, size = "h-10 w-10" }) {
+  const avatarEl = avatarUrl ? (
+    <img src={avatarUrl} alt={name} className="h-full w-full object-cover" />
+  ) : (
+    <div className="flex h-full w-full items-center justify-center text-sm font-semibold text-slate-300">
+      {name.charAt(0).toUpperCase()}
+    </div>
+  );
+
+  if (!username) {
+    return (
+      <div className={`${size} shrink-0 overflow-hidden rounded-full bg-slate-600 ring-1 ring-slate-600`}>
+        {avatarEl}
+      </div>
+    );
+  }
+
   return (
-    <div
+    <Link
+      to={`/channel/${username}`}
       className={`${size} shrink-0 overflow-hidden rounded-full bg-slate-600 ring-1 ring-slate-600`}
     >
-      {avatarUrl ? (
-        <img src={avatarUrl} alt={name} className="h-full w-full object-cover" />
-      ) : (
-        <div className="flex h-full w-full items-center justify-center text-sm font-semibold text-slate-300">
-          {name.charAt(0).toUpperCase()}
-        </div>
-      )}
-    </div>
+      {avatarEl}
+    </Link>
   );
 }
 
@@ -139,17 +151,27 @@ function Comment({ videoId }) {
             const name =
               comment?.owner?.fullName || comment?.owner?.username || "Unknown user";
             const avatarUrl = comment?.owner?.avatar?.url || comment?.owner?.avatar;
+            const username = comment?.owner?.username;
 
             return (
               <div
                 key={comment._id}
                 className="group flex gap-3 py-4 first:pt-0"
               >
-                <CommentAvatar name={name} avatarUrl={avatarUrl} />
+                <CommentAvatar name={name} avatarUrl={avatarUrl} username={username} />
 
                 <div className="min-w-0 flex-1">
                   <p className="flex flex-wrap items-baseline gap-2">
-                    <span className="text-sm font-medium text-cyan-300">{name}</span>
+                    {username ? (
+                      <Link
+                        to={`/channel/${username}`}
+                        className="text-sm font-medium text-cyan-300 hover:underline"
+                      >
+                        {name}
+                      </Link>
+                    ) : (
+                      <span className="text-sm font-medium text-cyan-300">{name}</span>
+                    )}
                     {comment.createdAt && (
                       <span className="text-xs text-slate-400">
                         {formatTimeAgo(comment.createdAt)}

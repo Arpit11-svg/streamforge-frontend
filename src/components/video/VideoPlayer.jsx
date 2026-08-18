@@ -4,7 +4,7 @@ const VideoPlayer = ({ videoUrl, thumbnailUrl }) => {
       src={videoUrl}
       poster={thumbnailUrl}
       controls
-      className="w-full rounded-lg"
+      className="aspect-video w-full rounded-lg bg-black object-cover"
     />
   );
 };

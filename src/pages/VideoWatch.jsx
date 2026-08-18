@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { FaThumbsUp, FaRegThumbsUp } from "react-icons/fa";
@@ -9,9 +8,13 @@ import likeService from "../services/like.service.js";
 import subscriptionService from "../services/subscription.service.js";
 import Comment from "./Comment.jsx";
 import authService from "../services/auth.service.js";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function VideoWatch() {
   const { videoId } = useParams();
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const [video, setVideo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -22,11 +25,16 @@ function VideoWatch() {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [subscriberCount, setSubscriberCount] = useState(0);
   const [isSubscribeSubmitting, setIsSubscribeSubmitting] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   // fetch-video from ID
   useEffect(() => {
     if (!videoId) return;
+    // Reset must happen before the fetch starts, or navigating between videos
+    // briefly shows the previous video's content/error instead of the loading state.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setError(null);
 
     videoService
@@ -114,7 +122,7 @@ function VideoWatch() {
 
   const ownerName =
     video?.owner?.fullName || video?.owner?.username || "Unknown creator";
-  const ownerAvatar = video?.owner?.avatar;
+  const ownerAvatar = video?.owner?.avatar?.url || video?.owner?.avatar;
 
   return (
     <div className="min-h-screen bg-slate-800">
@@ -151,7 +159,7 @@ function VideoWatch() {
               <button
                 type="button"
                 onClick={handleLikeToggle}
-                disabled={isLikeSubmitting}
+                disabled={!isAuthenticated || isLikeSubmitting}
                 aria-pressed={isLiked}
                 className={`flex shrink-0 items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
                   isLiked
@@ -168,13 +176,13 @@ function VideoWatch() {
               </button>
             </div>
 
-            <p className="mt-1 text-sm text-slate-400">
-              {formatViews(video.views)} • {formatTimeAgo(video.createdAt)}
-            </p>
             {/* owner channel related */}
 
             <div className="mt-4 flex gap-3 rounded-2xl border border-slate-700 bg-slate-700/50 p-4 backdrop-blur-sm">
-              <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-slate-600 ring-1 ring-slate-600">
+              <Link
+                to={`/channel/${video.owner?.username}`}
+                className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-slate-600 ring-1 ring-slate-600"
+              >
                 {ownerAvatar ? (
                   <img
                     src={ownerAvatar}
@@ -186,12 +194,18 @@ function VideoWatch() {
                     {ownerName.charAt(0).toUpperCase()}
                   </div>
                 )}
-              </div>
+              </Link>
 
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-cyan-300">{ownerName}</p>
+                <Link
+                  to={`/channel/${video.owner?.username}`}
+                  className="text-sm font-medium text-cyan-300 hover:underline"
+                >
+                  {ownerName}
+                </Link>
                 <p className="text-xs text-slate-400">
-                  {subscriberCount} {subscriberCount === 1 ? "Subscriber" : "Subscribers"}
+                  {subscriberCount}{" "}
+                  {subscriberCount === 1 ? "Subscriber" : "Subscribers"}
                 </p>
               </div>
 
@@ -199,7 +213,7 @@ function VideoWatch() {
               <button
                 type="button"
                 onClick={toggleSubscribe}
-                disabled={isSubscribeSubmitting}
+                disabled={!isAuthenticated || isSubscribeSubmitting}
                 aria-pressed={isSubscribed}
                 className={`h-fit shrink-0 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
                   isSubscribed
@@ -212,10 +226,36 @@ function VideoWatch() {
             </div>
 
             {/* video description */}
-            <div>
-              <p className="mt-2 whitespace-pre-line text-sm text-slate-300">
-                {video.description}
+            <div className="mt-4 rounded-2xl border border-slate-700 bg-slate-700/50 p-4 backdrop-blur-sm">
+              <p className="text-sm font-medium text-slate-200">
+                {formatViews(video.views)} • {formatTimeAgo(video.createdAt)}
               </p>
+
+              {video.description ? (
+                <>
+                  <p
+                    className={`mt-2 whitespace-pre-line text-sm text-slate-300 ${
+                      showFullDescription ? "" : "line-clamp-3"
+                    }`}
+                  >
+                    {video.description}
+                  </p>
+
+                  {video.description.length > 180 && (
+                    <button
+                      type="button"
+                      onClick={() => setShowFullDescription((prev) => !prev)}
+                      className="mt-2 text-sm font-semibold text-cyan-300 hover:text-cyan-200"
+                    >
+                      {showFullDescription ? "Show less" : "Show more"}
+                    </button>
+                  )}
+                </>
+              ) : (
+                <p className="mt-2 text-sm text-slate-400">
+                  No description provided.
+                </p>
+              )}
             </div>
 
             <div className="mt-6 rounded-2xl border border-slate-700 bg-slate-700/50 p-4 backdrop-blur-sm">

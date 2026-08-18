@@ -1,15 +1,20 @@
 import { formatDuration, formatViews, formatTimeAgo } from "../../utils/formatUtils.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function VideoCard({ video }) {
   const thumbnailUrl = video?.thumbnail?.url;
   const ownerName = video?.owner?.fullName || video?.owner?.username || "Unknown creator";
-  const ownerAvatar = video?.owner?.avatar;
+  const ownerAvatar = video?.owner?.avatar?.url || video?.owner?.avatar;
+  const ownerUsername = video?.owner?.username;
 
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/video/${video._id}`, { state: { video } });
+  };
+
+  const goToChannel = (e) => {
+    e.stopPropagation();
   };
 
 
@@ -36,7 +41,11 @@ function VideoCard({ video }) {
       </div>
 
       <div className="mt-3 flex gap-3">
-        <div className="h-9 w-9 shrink-0 overflow-hidden rounded-full bg-slate-600">
+        <Link
+          to={`/channel/${ownerUsername}`}
+          onClick={goToChannel}
+          className="h-9 w-9 shrink-0 overflow-hidden rounded-full bg-slate-600"
+        >
           {ownerAvatar ? (
             <img src={ownerAvatar} alt={ownerName} className="h-full w-full object-cover" />
           ) : (
@@ -44,13 +53,19 @@ function VideoCard({ video }) {
               {ownerName.charAt(0).toUpperCase()}
             </div>
           )}
-        </div>
+        </Link>
 
         <div className="min-w-0">
           <h3 className="line-clamp-2 text-sm font-semibold text-white transition-colors group-hover:text-cyan-300">
             {video.title}
           </h3>
-          <p className="mt-1 truncate text-xs text-slate-300">{ownerName}</p>
+          <Link
+            to={`/channel/${ownerUsername}`}
+            onClick={goToChannel}
+            className="mt-1 block truncate text-xs text-slate-300 hover:text-cyan-300 hover:underline"
+          >
+            {ownerName}
+          </Link>
           <p className="truncate text-xs text-slate-400">
             {formatViews(video?.views)} • {formatTimeAgo(video?.createdAt)}
           </p>

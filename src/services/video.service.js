@@ -24,6 +24,14 @@ class VideoService {
         );
         return response.data;
     }
+
+    async getVideosByOwner(ownerId) {
+        const response = await api.get(
+            "/videos",
+            { params: { userId: ownerId } }
+        );
+        return response.data;
+    }
 }
 
 const videoService = new VideoService();

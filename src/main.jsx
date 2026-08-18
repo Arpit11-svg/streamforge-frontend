@@ -10,6 +10,7 @@ import Login from "./pages/Login.jsx";
 import Home from "./pages/Home.jsx";
 import VideoWatch from "./pages/VideoWatch.jsx";
 import PublishVideo from "./pages/PublishVideo.jsx";
+import ChannelView from "./pages/ChannelView.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/publish-video",
         element: <PublishVideo />,
+      },
+      {
+        path: "/channel/:username",
+        element: <ChannelView />
       },
     ],
   },
