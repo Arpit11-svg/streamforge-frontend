@@ -5,6 +5,12 @@ export function formatDuration(seconds = 0) {
   return `${mins}:${String(secs).padStart(2, "0")}`;
 }
 
+export function formatCount(count = 0) {
+  if (count >= 1_000_000) return `${(count / 1_000_000).toFixed(1)}M`;
+  if (count >= 1_000) return `${(count / 1_000).toFixed(1)}K`;
+  return `${count}`;
+}
+
 export function formatViews(views = 0) {
   if (views >= 1_000_000) return `${(views / 1_000_000).toFixed(1)}M views`;
   if (views >= 1_000) return `${(views / 1_000).toFixed(1)}K views`;

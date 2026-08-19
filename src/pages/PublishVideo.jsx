@@ -9,6 +9,23 @@ function PublishVideo() {
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.isAuthenticated);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({ shouldFocusError: true });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  useEffect(() => {
+    if (error || success) {
+      window.scrollTo(0, 0);
+    }
+  }, [error, success]);
+
   if (!authStatus) {
     return (
       <div className="flex min-h-[70vh] items-center justify-center bg-slate-900 px-4">
@@ -70,23 +87,6 @@ function PublishVideo() {
       </div>
     );
   }
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({ shouldFocusError: true });
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
-  useEffect(() => {
-    if (error || success) {
-      window.scrollTo(0, 0);
-    }
-  }, [error, success]);
 
   const create = async (data) => {
     setError("");

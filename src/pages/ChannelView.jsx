@@ -10,7 +10,7 @@ import ChannelVideoGrid from "../components/channel/ChannelVideoGrid.jsx";
 function ChannelView() {
   const { username } = useParams();
   const currentUsername = useSelector(
-    (state) => state.auth.userData?.data?.username
+    (state) => state.auth.userData?.data?.username,
   );
 
   const [channel, setChannel] = useState(null);
@@ -27,7 +27,6 @@ function ChannelView() {
   useEffect(() => {
     if (!username?.trim()) return;
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsChannelLoading(true);
     setChannelError(null);
 
@@ -50,7 +49,6 @@ function ChannelView() {
   useEffect(() => {
     if (!channel?._id) return;
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsVideosLoading(true);
 
     videoService

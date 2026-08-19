@@ -11,6 +11,7 @@ import Home from "./pages/Home.jsx";
 import VideoWatch from "./pages/VideoWatch.jsx";
 import PublishVideo from "./pages/PublishVideo.jsx";
 import ChannelView from "./pages/ChannelView.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/channel/:username",
         element: <ChannelView />
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
     ],
   },

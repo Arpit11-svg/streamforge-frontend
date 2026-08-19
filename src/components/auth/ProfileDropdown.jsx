@@ -8,6 +8,7 @@ import {
   FaCog,
   FaSignOutAlt,
   FaChevronDown,
+  FaChartBar,
 } from "react-icons/fa";
 import Logout from "./Logout.jsx";
 
@@ -141,7 +142,18 @@ function ProfileDropdown() {
           <div className="p-2">
             <button
               onClick={() => {
-                navigate("/profile");
+                navigate("/dashboard");
+                setIsOpen(false);
+              }}
+              className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-300 transition hover:bg-slate-700 hover:text-white"
+            >
+              <FaChartBar className="text-slate-400" />
+              Dashboard
+            </button>
+
+            <button
+              onClick={() => {
+                navigate("/my-profile");
                 setIsOpen(false);
               }}
               className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-300 transition hover:bg-slate-700 hover:text-white"

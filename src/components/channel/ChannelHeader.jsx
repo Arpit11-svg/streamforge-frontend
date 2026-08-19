@@ -8,8 +8,8 @@ function ChannelHeader({
   const { fullName, username, avatar, coverImage, subscribersCount } = channel;
 
   const displayName = fullName || username;
-  const avatarUrl = avatar?.url;
-  const coverUrl = coverImage?.url;
+  const avatarUrl = avatar?.url || avatar;
+  const coverUrl = coverImage?.url || coverImage;
 
   return (
     <div>
