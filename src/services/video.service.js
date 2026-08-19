@@ -32,6 +32,20 @@ class VideoService {
         );
         return response.data;
     }
+
+    async deleteVideo(videoId) {
+        const response = await api.delete(
+            `/videos/delete-video/${videoId}`
+        );
+        return response.data;
+    }
+
+    async togglePublishStatus(videoId) {
+        const response = await api.patch(
+            `/videos/toggle/publish/${videoId}`
+        );
+        return response.data;
+    }
 }
 
 const videoService = new VideoService();

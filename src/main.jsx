@@ -12,6 +12,7 @@ import VideoWatch from "./pages/VideoWatch.jsx";
 import PublishVideo from "./pages/PublishVideo.jsx";
 import ChannelView from "./pages/ChannelView.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import MyVideos from "./pages/MyVideos.jsx";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/my-videos",
+        element: <MyVideos />,
       },
     ],
   },

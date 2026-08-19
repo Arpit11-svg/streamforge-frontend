@@ -153,7 +153,7 @@ function ProfileDropdown() {
 
             <button
               onClick={() => {
-                navigate("/my-profile");
+                navigate(`/channel/${userData?.username}`);
                 setIsOpen(false);
               }}
               className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-300 transition hover:bg-slate-700 hover:text-white"

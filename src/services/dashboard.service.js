@@ -8,6 +8,15 @@ class DashboardService {
 
         return response.data;
     }
+
+    async getChannelVideos({ page = 1, limit = 20 } = {}) {
+        const response = await api.get(
+            "/dashboard/videos",
+            { params: { page, limit } }
+        );
+
+        return response.data;
+    }
 }
 
 const dashboardService = new DashboardService();
