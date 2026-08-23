@@ -59,6 +59,7 @@ function MyVideos() {
   };
 
   const handleDelete = (video) => {
+    //  pops a native browser confirm dialog asking the user to confirm deletion
     if (!window.confirm(`Delete "${video.title}"? This can't be undone.`)) {
       return;
     }

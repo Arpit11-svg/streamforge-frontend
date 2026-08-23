@@ -11,6 +11,11 @@ class LikeService {
         const response = await api.get(`/likes/video/v/${videoId}`);
         return response.data;
     }
+
+    async getCurrentUserLikedVideos(){
+        const response = await api.get("/likes/videos");
+        return response.data;
+    }
 }
 
 const likeService = new LikeService();

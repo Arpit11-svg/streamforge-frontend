@@ -13,6 +13,7 @@ import PublishVideo from "./pages/PublishVideo.jsx";
 import ChannelView from "./pages/ChannelView.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import MyVideos from "./pages/MyVideos.jsx";
+import LikedVideos from "./pages/LikedVideos.jsx";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
         path: "/my-videos",
         element: <MyVideos />,
       },
+      {
+        path: "/my-liked-videos/:userId",
+        element: <LikedVideos />
+      }
     ],
   },
 ]);

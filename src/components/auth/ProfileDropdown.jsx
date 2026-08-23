@@ -175,24 +175,13 @@ function ProfileDropdown() {
 
             <button
               onClick={() => {
-                navigate("/liked-videos");
+                navigate(`/my-liked-videos/${userData._id}`);
                 setIsOpen(false);
               }}
               className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-300 transition hover:bg-slate-700 hover:text-white"
             >
               <FaHeart className="text-slate-400" />
               Liked Videos
-            </button>
-
-            <button
-              onClick={() => {
-                navigate("/settings");
-                setIsOpen(false);
-              }}
-              className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-300 transition hover:bg-slate-700 hover:text-white"
-            >
-              <FaCog className="text-slate-400" />
-              Settings
             </button>
           </div>
 

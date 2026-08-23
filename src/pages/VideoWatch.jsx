@@ -30,11 +30,7 @@ function VideoWatch() {
   // fetch-video from ID
   useEffect(() => {
     if (!videoId) return;
-    // Reset must happen before the fetch starts, or navigating between videos
-    // briefly shows the previous video's content/error instead of the loading state.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setError(null);
 
     videoService
@@ -53,12 +49,13 @@ function VideoWatch() {
 
   // fetch like from videoId
   useEffect(() => {
-    if (!videoId) return;
+    if (!videoId || !isAuthenticated) return;
 
     likeService
       .getVideoLikes(videoId)
       .then((response) => {
         setLikesCount(response.data.likes);
+        setIsLiked(response.data.isLiked);
       })
       .catch((err) => {
         console.error("Error fetching likes count:", err);

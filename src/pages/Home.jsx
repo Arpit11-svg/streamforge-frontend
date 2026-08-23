@@ -10,9 +10,8 @@ function Home() {
   const [error, setError] = useState(null);
   const [videos, setVideos] = useState([]);
 
-   useEffect(() => {
-
-    if(!isAuthenticated) {
+  useEffect(() => {
+    if (!isAuthenticated) {
       setIsLoading(false);
       return;
     }
@@ -32,7 +31,6 @@ function Home() {
   }, [isAuthenticated]);
 
   if (!isAuthenticated) {
-
     return (
       <div className="min-h-[70vh] flex items-center justify-center bg-gradient-to-r from-blue-50 to-purple-50 px-4">
         <Link to="/login">
@@ -55,7 +53,6 @@ function Home() {
       </div>
     );
   }
-
 
   return (
     <div className="min-h-screen bg-slate-800">
