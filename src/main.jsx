@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import MyVideos from "./pages/MyVideos.jsx";
 import LikedVideos from "./pages/LikedVideos.jsx";
 import MyPlaylist from "./pages/MyPlaylist.jsx";
+import CurrentPlaylist from "./pages/CurrentPlaylist.jsx";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "/my-playlists/:userId",
         element: <MyPlaylist />
+      },
+      {
+        path: "/playlist/:playlistId",
+        element: <CurrentPlaylist/>
       }
     ],
   },

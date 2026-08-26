@@ -11,6 +11,13 @@ class PlaylistService{
         const response = await api.get(`/playlist/user/${userId}`);
         return response.data;
     }
+
+    async getPlaylistById(playlistId){
+        const response=await api.get(`/playlist/${playlistId}`);
+        return response.data;
+    }
+
+
 }
 const playlistService = new PlaylistService();
 export default playlistService;
