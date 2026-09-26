@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Button, Input } from "../ui";
 import authService from "../../services/auth.service";
 import { useNavigate } from "react-router-dom";
+import { validateFile } from "../../utils/fileValidations";
 
 function SignupForm() {
   const {
@@ -16,7 +17,6 @@ function SignupForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
 
   useEffect(() => {
     if (error || success) {
@@ -186,6 +186,8 @@ function SignupForm() {
           accept="image/*"
           {...register("avatar", {
             required: "Please upload an avatar",
+            validate: (files) =>
+              validateFile(files, ["image/jpeg", "image/png", "image/webp"], 5),
           })}
         />
         {errors.avatar && (
@@ -196,8 +198,16 @@ function SignupForm() {
           label="Cover Image (Optional)"
           type="file"
           accept="image/*"
-          {...register("coverImage")}
+          {...register("coverImage", {
+            validate: (files) =>
+              validateFile(files, ["image/jpeg", "image/png", "image/webp"], 5),
+          })}
         />
+        {errors.coverImage && (
+          <p className="mt-1 text-sm text-red-400">
+            {errors.coverImage.message}
+          </p>
+        )}
 
         <Button
           type="submit"

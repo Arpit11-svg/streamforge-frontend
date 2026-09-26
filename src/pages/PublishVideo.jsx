@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import videoService from "../services/video.service";
 import { useSelector } from "react-redux";
+import { validateFile } from "../utils/fileValidations.js";
 
 function PublishVideo() {
   const navigate = useNavigate();
@@ -178,6 +179,12 @@ function PublishVideo() {
               label="Video file"
               {...register("videoFile", {
                 required: "Video file is required",
+                validate: (files) =>
+                  validateFile(
+                    files,
+                    ["video/mp4", "video/webm", "video/ogg"],
+                    100,
+                  ),
               })}
             />
             {errors.videoFile && (
@@ -194,6 +201,12 @@ function PublishVideo() {
               label="Thumbnail image"
               {...register("thumbnail", {
                 required: "Thumbnail image is required",
+                validate: (files) =>
+                  validateFile(
+                    files,
+                    ["image/jpeg", "image/png", "image/webp"],
+                    5,
+                  ),
               })}
             />
             {errors.thumbnail && (
