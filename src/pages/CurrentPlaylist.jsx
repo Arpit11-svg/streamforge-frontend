@@ -18,6 +18,10 @@ function CurrentPlaylist() {
       });
   }, [playlistId]);
 
+  const addVideos = () => {
+
+  };
+
   if (!playlist) {
     return <div>Loading...</div>;
   }
@@ -51,6 +55,11 @@ function CurrentPlaylist() {
       ) : (
         <p>No videos in this playlist.</p>
       )}{" "}
+
+{/* Add current user's video into playlist */}
+      <div>
+        <button onClick={addVideos}>+Add Video</button>
+      </div>
     </div>
   );
 }

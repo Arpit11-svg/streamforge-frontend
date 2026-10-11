@@ -10,9 +10,10 @@ class VideoService {
         return response.data;
     }
 
-    async getAllVideos() {
+    async getAllVideos(query="") {
         const response = await api.get(
-            "/videos"
+            "/videos",
+            { params: { query } }
         );
 
         return response.data;
@@ -46,6 +47,7 @@ class VideoService {
         );
         return response.data;
     }
+
 }
 
 const videoService = new VideoService();

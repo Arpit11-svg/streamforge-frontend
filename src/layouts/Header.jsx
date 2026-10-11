@@ -14,8 +14,11 @@ function Header() {
 
   const handleSearch = (e) => {
     // TODO: Implement search functionality
+
     e.preventDefault();
-    alert("Search functionality will be implemented soon!");
+    if(query.trim() === "") navigate("/");
+    else navigate(`/?query=${encodeURIComponent(query.trim())}`);
+
   };
 
   return (

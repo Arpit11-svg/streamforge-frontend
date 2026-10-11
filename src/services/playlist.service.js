@@ -17,6 +17,10 @@ class PlaylistService{
         return response.data;
     }
 
+    async addVideoToPlaylist({playlistId, videoId}){
+        const response = await api.patch(`/playlist/add/${playlistId}/${videoId}`);
+        return response.data;
+    }
 
 }
 const playlistService = new PlaylistService();

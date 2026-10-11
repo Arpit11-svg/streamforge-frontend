@@ -3,21 +3,29 @@ import videoService from "../services/video.service.js";
 import VideoCard from "../components/video/VideoCard.jsx";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function Home() {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [videos, setVideos] = useState([]);
+  const navigate = useNavigate();
+  
+  const [ searchParams ] = useSearchParams();
+  const query = searchParams.get("query") || "";
 
   useEffect(() => {
+
+    setIsLoading(true);
+    setError(null);
     if (!isAuthenticated) {
       setIsLoading(false);
       return;
     }
 
     videoService
-      .getAllVideos()
+      .getAllVideos(query)
       .then((response) => {
         setVideos(response.data.docs);
       })
@@ -28,7 +36,7 @@ function Home() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [isAuthenticated]);
+  }, [isAuthenticated, query, navigate]);
 
   if (!isAuthenticated) {
     return (
